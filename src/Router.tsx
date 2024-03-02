@@ -6,7 +6,7 @@ import { User } from "./pages/User";
 export function Router() {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/x",
       element: <Home />,
     },
     {
@@ -14,7 +14,8 @@ export function Router() {
       element: <Favorites />,
     },
     {
-      path: "/usuario",
+      path: "/",
+      // path: "/usuario",
       element: <User />,
     },
   ]);
