@@ -1,20 +1,53 @@
 import { FaMagnifyingGlass, FaRegHeart } from "react-icons/fa6";
+import { KeyboardEvent, useState } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
-export interface HeaderProps {
-  handleSearch: () => void;
-}
+export function Header() {
+  const [searchText, setSearchText] = useState<string>("");
 
-export function Header({ handleSearch }: HeaderProps) {
+  async function handleSearch() {
+    if (!searchText.length) {
+      toast.error("Informe um usuário", {
+        position: "bottom-right",
+      });
+
+      return;
+    }
+
+    window.location.href = `/usuario?u=${searchText}`;
+  }
+
+  function handleButtonKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") {
+      if (!searchText.length) {
+        toast.error("Informe um usuário", {
+          position: "bottom-right",
+        });
+
+        return;
+      }
+
+      window.location.href = `/usuario?u=${searchText}`;
+    }
+  }
+
   return (
-    <div className="flex h-20 w-full">
-      <div className="flex h-full w-full items-center border-b-[1px] border-borderAndLine px-3 md:px-6">
+    <div className="flex min-h-20 w-full">
+      <div className="flex w-full items-center border-b-[1px] border-borderAndLine px-3 md:px-6">
         <div className="relative flex h-10 items-center justify-between rounded-[4px] border-[1px] bg-whiteBackgroundLight transition focus-within:border-primaryColor hover:border-primaryColor md:w-[668px]">
           <input
             type="text"
             placeholder="Buscar usuário"
-            className="font-regular h-full w-full rounded-md px-4 pr-11 text-md text-greyDark placeholder-placeholder outline-none"
+            className="w-full rounded-md px-4 pr-11 text-md font-regular text-greyDark placeholder-placeholder outline-none"
+            onChange={(event) => setSearchText(event.target.value)}
+            onKeyDown={handleButtonKeyDown}
           />
-          <button className="group absolute right-4" onClick={handleSearch}>
+          <button
+            type="button"
+            onClick={handleSearch}
+            className="group absolute right-4"
+          >
             <FaMagnifyingGlass
               className="fill-placeholder transition group-hover:fill-primaryColor"
               size={24}
@@ -23,13 +56,13 @@ export function Header({ handleSearch }: HeaderProps) {
         </div>
       </div>
 
-      <a
-        href="favoritos"
-        className="flex h-full flex-col-reverse items-center justify-center bg-primaryColor px-2 text-md font-medium text-whiteBackgroundLight transition hover:bg-primaryColorDark md:w-[145px] md:flex-row md:gap-2"
+      <Link
+        to="/favoritos"
+        className="flex flex-col-reverse items-center justify-center bg-primaryColor px-2 text-md font-medium text-whiteBackgroundLight transition hover:bg-primaryColorDark md:w-[145px] md:flex-row md:gap-2"
       >
         <FaRegHeart className="mb-[1px]" size={24} />
         Favoritos
-      </a>
+      </Link>
     </div>
   );
 }
