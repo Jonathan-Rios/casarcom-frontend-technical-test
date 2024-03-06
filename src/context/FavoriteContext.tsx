@@ -1,12 +1,13 @@
 import React, {
-  SetStateAction,
   createContext,
+  SetStateAction,
   useEffect,
   useState,
 } from "react";
-import { IRepository } from "../types/repository";
 
-interface FavoriteContextDataProps {
+import { IRepository } from "@/types/repository";
+
+export interface FavoriteContextDataProps {
   favoriteRepositories: IRepository[];
   setFavoriteRepositories: React.Dispatch<SetStateAction<IRepository[]>>;
   saveOnLocalStore: (repository: IRepository) => void;

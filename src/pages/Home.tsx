@@ -1,6 +1,5 @@
-import { Header } from "../components/Header";
-
-import searchingImage from "../assets/searching.svg";
+import searchingImage from "@/assets/searching.svg";
+import { Header } from "@/components/Header";
 
 export function Home() {
   return (

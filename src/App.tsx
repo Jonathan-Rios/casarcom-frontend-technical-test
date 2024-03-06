@@ -1,16 +1,17 @@
 import "./styles/global.css";
-import { Router } from "./Router";
-import { AppProvider } from "./context";
-
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Loading } from "./components/Loading";
+import { RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
+import { Loading } from "@/components/Loading";
+import { AppProvider } from "@/context";
+import { router } from "@/routes";
 
 function App() {
   return (
     <AppProvider>
-      <Router />
+      <RouterProvider router={router} />
       <ToastContainer />
       <Loading />
     </AppProvider>

@@ -1,10 +1,12 @@
-import { FaMagnifyingGlass, FaRegHeart } from "react-icons/fa6";
 import { KeyboardEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { FaMagnifyingGlass, FaRegHeart } from "react-icons/fa6";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export function Header() {
   const [searchText, setSearchText] = useState<string>("");
+
+  const navigate = useNavigate();
 
   async function handleSearch() {
     if (!searchText.length) {
@@ -14,21 +16,12 @@ export function Header() {
 
       return;
     }
-
-    window.location.href = `/usuario?u=${searchText}`;
+    navigate(`/usuario/${searchText}`);
   }
 
   function handleButtonKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter") {
-      if (!searchText.length) {
-        toast.error("Informe um usuário", {
-          position: "bottom-right",
-        });
-
-        return;
-      }
-
-      window.location.href = `/usuario?u=${searchText}`;
+      handleSearch();
     }
   }
 
@@ -39,6 +32,7 @@ export function Header() {
           <input
             type="text"
             placeholder="Buscar usuário"
+            data-testid="search-input"
             className="w-full rounded-md px-4 pr-11 text-md font-regular text-greyDark placeholder-placeholder outline-none"
             onChange={(event) => setSearchText(event.target.value)}
             onKeyDown={handleButtonKeyDown}
@@ -46,6 +40,7 @@ export function Header() {
           <button
             type="button"
             onClick={handleSearch}
+            data-testid="search-input-button"
             className="group absolute right-4"
           >
             <FaMagnifyingGlass

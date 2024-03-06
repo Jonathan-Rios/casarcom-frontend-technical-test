@@ -1,6 +1,6 @@
-import { Header } from "../components/Header";
-import { Repository } from "../components/Repository";
-import { useFavorite } from "../hooks/useFavorite";
+import { Header } from "@/components/Header";
+import { Repository } from "@/components/Repository";
+import { useFavorite } from "@/hooks/useFavorite";
 
 export function Favorites() {
   const { favoriteRepositories } = useFavorite();
@@ -15,12 +15,11 @@ export function Favorites() {
             Meus favoritos
           </h1>
 
-          {favoriteRepositories.length ? (
+          {favoriteRepositories?.length ? (
             favoriteRepositories.map((repository) => (
               <Repository
                 key={repository.name}
                 repository={repository}
-                isFavorite={repository.isFavorite}
                 avatarEnabled
               />
             ))

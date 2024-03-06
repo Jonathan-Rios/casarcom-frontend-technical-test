@@ -12,6 +12,7 @@ export function LanguageBadge({ language }: LanguageBadgeProps) {
   return (
     <div className="flex items-center gap-2">
       <span
+        data-testid="badge-color"
         className={`block h-4 min-h-4 w-4 min-w-4 rounded-full`}
         style={{ backgroundColor: badgeColor }}
       />

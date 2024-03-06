@@ -1,11 +1,10 @@
-import { Header } from "../components/Header";
+import { useParams } from "react-router-dom";
 
-import notFoundImage from "../assets/not-found.svg";
-import { useSearchParams } from "react-router-dom";
+import notFoundImage from "@/assets/not-found.svg";
+import { Header } from "@/components/Header";
 
 export function NotFound() {
-  const [searchParams] = useSearchParams();
-  const notFoundText = searchParams.get("u");
+  const { notFoundText } = useParams();
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -20,7 +19,7 @@ export function NotFound() {
           Nenhum usuário encontrado
         </h1>
         <h5 className="mb-12 text-center text-h5 text-greyDark">
-          Verifique se a escrita está correta ou tente novamente{" "}
+          Verifique se a escrita está correta ou tente novamente
         </h5>
 
         <img src={notFoundImage} alt="Imagem representando falha na busca" />

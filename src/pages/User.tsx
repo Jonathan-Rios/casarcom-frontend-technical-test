@@ -1,11 +1,12 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Header } from "../components/Header";
-import { Repository } from "../components/Repository";
 import { useEffect, useState } from "react";
-import { IGitRepositoryResponse, IRepository } from "../types/repository";
-import { api } from "../lib/axios";
-import { useLoading } from "../hooks/useLoading";
-import { useFavorite } from "../hooks/useFavorite";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { Header } from "@/components/Header";
+import { Repository } from "@/components/Repository";
+import { useFavorite } from "@/hooks/useFavorite";
+import { useLoading } from "@/hooks/useLoading";
+import { api } from "@/lib/axios";
+import { IGitRepositoryResponse, IRepository } from "@/types/repository";
 
 export interface IGitProfile {
   name: string;
@@ -15,8 +16,7 @@ export interface IGitProfile {
 }
 
 export function User() {
-  const [searchParams] = useSearchParams();
-  const gitUser = searchParams.get("u");
+  const { gitUser } = useParams();
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -30,25 +30,9 @@ export function User() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight;
-      const scrollTop = document.documentElement.scrollTop;
-      const windowHeight = window.innerHeight;
+    setCurrentPage(1);
+    setRepositories([]);
 
-      // Verifica se o usuário rola até o final da página
-      if (scrollTop + windowHeight >= scrollHeight - 1) {
-        // Incrementa a página apenas se não estiver carregando e há mais itens para carregar
-        if (repositories.length % itemsPerPage === 0) {
-          setCurrentPage((prev) => prev + 1);
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [repositories.length]);
-
-  useEffect(() => {
     if (!gitUser) {
       return navigate(`/`);
     }
@@ -56,29 +40,33 @@ export function User() {
     async function loadProfile() {
       try {
         setIsLoading(true);
-        const profileResponse = await api.get<IGitProfile>(`users/${gitUser}`);
-        const profileData = profileResponse.data;
+        await api
+          .get<IGitProfile>(`users/${gitUser}`)
+          .then((profileResponse) => {
+            const profileData = profileResponse.data;
 
-        if (!profileData) {
-          return navigate(`/nao-encontrado?u=${gitUser}`);
-        }
+            if (!profileData) {
+              return navigate(`/nao-encontrado/${gitUser}`);
+            }
 
-        setGitProfile({
-          name: profileData.name || "Nome não informado",
-          avatar_url: profileData.avatar_url,
-          login: profileData.login,
-          bio: profileData.bio || "Sem biografia",
-        });
-        setIsLoading(false);
+            setGitProfile({
+              name: profileData.name || "Nome não informado",
+              avatar_url: profileData.avatar_url,
+              login: profileData.login,
+              bio: profileData.bio || "Sem biografia",
+            });
+
+            setIsLoading(false);
+          });
       } catch (error) {
         console.error(error);
         setIsLoading(false);
-        return navigate(`/nao-encontrado?u=${gitUser}`);
+        return navigate(`/nao-encontrado/${gitUser}`);
       }
     }
 
     loadProfile();
-  }, []);
+  }, [gitUser]);
 
   useEffect(() => {
     async function loadRepositories() {
@@ -127,14 +115,40 @@ export function User() {
         setIsLoading(false);
       } catch (error) {
         console.error(error);
-        setIsLoading(false);
       }
+      setIsLoading(false);
     }
 
-    if (gitProfile) {
-      loadRepositories();
-    }
-  }, [currentPage, gitProfile]);
+    loadRepositories();
+  }, [currentPage]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+
+      scrollTimeout = setTimeout(() => {
+        const scrollHeight = document.documentElement.scrollHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+
+        // Verifica se o usuário rola até o final da página
+        if (scrollTop + windowHeight >= scrollHeight - 1) {
+          // Incrementa a página apenas se não estiver carregando e há mais itens para carregar
+          if (repositories.length % itemsPerPage === 0) {
+            setCurrentPage((prev) => prev + 1);
+          }
+        }
+      }, debounceTime);
+    };
+
+    let scrollTimeout: NodeJS.Timeout | null = null;
+    const debounceTime = 300;
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [repositories.length]);
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -142,11 +156,17 @@ export function User() {
 
       <div className="flex flex-col gap-12 p-6 pb-10 md:flex-row">
         <div className="flex h-min w-full flex-col items-center rounded border-[1px] border-borderAndLine px-6 py-10 md:w-[448px]">
-          <img
-            src={gitProfile?.avatar_url}
-            alt="Foto do usuário do github"
-            className="mb-6 h-[200px] w-[200px] rounded-full"
-          />
+          {gitProfile?.avatar_url ? (
+            <img
+              src={gitProfile?.avatar_url}
+              alt="Foto do usuário do github"
+              className="mb-6 h-[200px] w-[200px] rounded-full"
+            />
+          ) : (
+            <div className="animate-pulse">
+              <div className="mb-6 h-[200px] w-[200px] rounded-full bg-gray-300"></div>
+            </div>
+          )}
 
           <h1 className="text-center text-h1 font-semibold text-greyNeutral">
             {gitProfile?.name}
@@ -167,11 +187,7 @@ export function User() {
 
           {repositories.length ? (
             repositories.map((repository) => (
-              <Repository
-                key={repository.name}
-                repository={repository}
-                isFavorite={repository.isFavorite}
-              />
+              <Repository key={repository.name} repository={repository} />
             ))
           ) : (
             <div className="mt-10 flex flex-col items-center justify-center px-4 md:mt-32">

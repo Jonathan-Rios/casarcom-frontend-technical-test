@@ -1,7 +1,7 @@
 import React from "react";
 
-import { LoadingContextProvider } from "./LoadingContext";
 import { FavoriteContextProvider } from "./FavoriteContext";
+import { LoadingContextProvider } from "./LoadingContext";
 
 interface AppProviderProps {
   children: React.ReactNode;
