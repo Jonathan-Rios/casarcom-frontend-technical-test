@@ -85,6 +85,10 @@ export function FavoriteContextProvider({
   }
 
   function findInFavorites(repositoryLogin: string, repositoryName: string) {
+    if (!favoriteRepositories.length) {
+      return false;
+    }
+
     const found = favoriteRepositories.find(
       (repository: IRepository) =>
         repository.owner.login === repositoryLogin &&
