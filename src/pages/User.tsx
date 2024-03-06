@@ -18,7 +18,7 @@ export interface IGitProfile {
 export function User() {
   const { gitUser } = useParams();
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number | null>(null);
   const itemsPerPage = 10;
 
   const [repositories, setRepositories] = useState<IRepository[]>([]);
@@ -30,7 +30,7 @@ export function User() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setCurrentPage(1);
+    setCurrentPage(null);
     setRepositories([]);
 
     if (!gitUser) {
@@ -40,6 +40,7 @@ export function User() {
     async function loadProfile() {
       try {
         setIsLoading(true);
+
         await api
           .get<IGitProfile>(`users/${gitUser}`)
           .then((profileResponse) => {
@@ -55,6 +56,8 @@ export function User() {
               login: profileData.login,
               bio: profileData.bio || "Sem biografia",
             });
+
+            setCurrentPage(1);
 
             setIsLoading(false);
           });
@@ -119,7 +122,9 @@ export function User() {
       setIsLoading(false);
     }
 
-    loadRepositories();
+    if (currentPage) {
+      loadRepositories();
+    }
   }, [currentPage]);
 
   useEffect(() => {
@@ -137,7 +142,7 @@ export function User() {
         if (scrollTop + windowHeight >= scrollHeight - 1) {
           // Increment page only if not be loading and if have more itens to load
           if (repositories.length % itemsPerPage === 0) {
-            setCurrentPage((prev) => prev + 1);
+            setCurrentPage((prev) => (prev ? prev + 1 : 1));
           }
         }
       }, debounceTime);
