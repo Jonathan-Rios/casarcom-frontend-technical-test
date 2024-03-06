@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 export function Header() {
   const [searchText, setSearchText] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -14,6 +15,7 @@ export function Header() {
         position: "bottom-right",
       });
 
+      setError(true);
       return;
     }
     navigate(`/usuario/${searchText}`);
@@ -28,13 +30,18 @@ export function Header() {
   return (
     <div className="flex min-h-20 w-full">
       <div className="flex w-full items-center border-b-[1px] border-borderAndLine px-3 md:px-6">
-        <div className="relative flex h-10 items-center justify-between rounded-[4px] border-[1px] bg-whiteBackgroundLight transition focus-within:border-primaryColor hover:border-primaryColor md:w-[668px]">
+        <div
+          className={`relative flex h-10 items-center justify-between rounded-[4px] border-[1px] bg-whiteBackgroundLight transition md:w-[668px] ${error ? "border-Danger" : "focus-within:border-primaryColor hover:border-primaryColor"}`}
+        >
           <input
             type="text"
             placeholder="Buscar usuário"
             data-testid="search-input"
             className="w-full rounded-md px-4 pr-11 text-md font-regular text-greyDark placeholder-placeholder outline-none"
-            onChange={(event) => setSearchText(event.target.value)}
+            onChange={(event) => {
+              setSearchText(event.target.value);
+              setError(false);
+            }}
             onKeyDown={handleButtonKeyDown}
           />
           <button
