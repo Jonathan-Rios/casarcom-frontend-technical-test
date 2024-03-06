@@ -133,9 +133,9 @@ export function User() {
         const scrollTop = document.documentElement.scrollTop;
         const windowHeight = window.innerHeight;
 
-        // Verifica se o usuário rola até o final da página
+        // Verify if is scrolled to the end of page
         if (scrollTop + windowHeight >= scrollHeight - 1) {
-          // Incrementa a página apenas se não estiver carregando e há mais itens para carregar
+          // Increment page only if not be loading and if have more itens to load
           if (repositories.length % itemsPerPage === 0) {
             setCurrentPage((prev) => prev + 1);
           }
