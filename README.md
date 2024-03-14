@@ -1,57 +1,92 @@
-### Teste técnico - Front end - Pleno - Casar.com
+<h1 align="center">Teste técnico - Casar.com - Front-end</h1>
 
-# Lista de repositórios do GitHub
+<p align="center">
+  <img 
+    src="https://img.shields.io/badge/React-18.2.0-blue" 
+    alt="React Ver. 18.2.0"
+  />
+  <img 
+    src="https://img.shields.io/badge/Typescript-5.2.2-blue"
+    alt="Typescript Ver. 5.2.2" 
+  />
+  <img 
+    alt="License"
+    src="https://img.shields.io/static/v1?label=license&message=MIT&color=E51C44&labelColor=0A1033"
+  />
+</p>
 
-## Descrição
+<div align="center">
 
-Nesse projeto você deverá desenvolver um site simples em que seja possível acessar a página de um usuário e visualizar seus repositórios públicos, além de poder favoritar/remover repositórios dos favoritos.
+  ![Last commit](https://img.shields.io/github/last-commit/Jonathan-Rios/casarcom-frontend-technical-test?color=4DA1CD 'Last commit') &nbsp;
+  ![Repo size](https://img.shields.io/github/repo-size/Jonathan-Rios/casarcom-frontend-technical-test?color=4DA1CD 'Repo size') &nbsp;
+  ![Languages](https://img.shields.io/github/languages/count/Jonathan-Rios/casarcom-frontend-technical-test?color=4DA1CD 'Languages') &nbsp;
+  
+</div>
 
-## Requisitos
+<br>
 
-- [ ] Uma barra de pesquisa para procurar um usuário
-- [ ] Um feedback caso o usuário não seja encontrado
-- [ ] Uma página do usuário, mostrando suas informações e sua lista de repositórios
-- [ ] **NÃO OBRIGATÓRIO** A lista de repositórios deverá conter uma paginação com rolagem infinita, ou seja, mais repositórios serão carregados conforme o usuário rola a página para baixo até que não haja mais repositórios (estilo Facebook, Instagram, Twitter, etc.)
-- [ ] Possibilidade de favoritar e remover repositórios dos favoritos (utilizar algum gerenciador de estado)
-- [ ] Listar repositórios favoritos
+<h3 align="center">Imagem prévia da aplicação</h3>
+ 
+<div align="center">
+  <img src=".github/project-preview.png?style=flat" alt="Cover" />
+</div>
 
-## Obrigatório
+<br>
 
-- Utilização de um framework/lib dentre esses: (Vue 3, Nuxt 3, React ou Next)
-- Typescript
-- Responsividade
-- Testes unitários (Jest ou Vitest), o máximo de cobertura que conseguir, mas no mínimo 1 unidade de teste, por exemplo: (Listagem de repositórios)
-- Clean code
+## 💻 Projeto
+A aplicação foi desenvolvida seguindo as solicitações do teste técnico da empresa casar.com contidas neste [documento](./CHALLENGE_README.md).
 
-**Sinta-se livre para adicionar qualquer outra tecnologia, desde que utilize as tecnologias obrigatórias.**
+Resumo da aplicação: Aplicação que permite buscar um usuário e seus repositórios na API do GitHub, listá-los e permitir adicionar/remover aos favoritos da aplicação os repositórios que deseja.
 
-## Diferenciais
+## 🧪 Tecnologias
 
-- Tailwindcss
-- Commits padronizados
+Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-## Layout
-
-Desenvolver o site baseado nesse [protótipo](https://www.figma.com/file/NPsgIQuNZEv46Jy9u1d90E/Processo-Seletivo?node-id=0%3A1).
-
-## Informações úteis
-
-#### Sobre a API do GitHub
-
-A API do GitHub requer uma autenticação. Você deverá gerar um token de acesso pessoal no seu GitHub e utilizá-lo no projeto.
-Caso não queira deixar o seu token visível em seu repositório, disponibilize um guia em seu **README** sobre onde substituir o token.
-Para mais detalhes sobre como gerar um token, acesse o [guia de autenticação do GitHub](https://docs.github.com/pt/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28).
+- [ViteJs](https://vitejs.dev/)
+- [React](https://reactjs.org)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind](https://tailwindcss.com/)
 
 
-## Sobre a entrega
 
-- Clone esse repositório (ou copie o README)
-- Desenvolva seu projeto atualizando seu repositório
-- Envie o link do seu repositório para **tech@casar.com**
-    - Título do e-mail: Teste técnico - {Seu nome completo}
-    - Corpo do e-mail: Link do repositório
-    - Opcional: Cover letter
+## 🔗 Link do projeto
+Se quiser ver o projeto no ar, clique [aqui](https://casarcom-frontend-technical-test.vercel.app/).
 
-## Links
+## 🚀 Como executar
+Clone o projeto e acesse a pasta do mesmo.
 
-[Documentação da API do GitHub](https://docs.github.com/pt/rest?apiVersion=2022-11-28)
+```bash
+$ git clone https://github.com/Jonathan-Rios/casarcom-frontend-technical-test.git
+
+$ cd casarcom-frontend-technical-test
+```
+
+Para iniciá-lo, siga os passos abaixo:
+```bash
+# Instalar as dependências
+$ npm install
+
+# Iniciar o projeto
+$ npm run dev
+```
+- Aparecerá no terminal o link de acesso da aplicação, geralmente na porta http://localhost:5173/.
+
+## 📝 License
+
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](./LICENSE.md) para mais detalhes.
+
+<br />
+
+
+---
+<br />
+
+<a href="https://github.com/Jonathan-Rios">
+ <img src="https://github.com/Jonathan-Rios.png" width="100px;" alt="" />
+ <br />
+ <sub><b>Jonathan Rios Sousa</b></sub></a>
+
+💠 NeverStopLearning 💠
+
+[![Linkedin Badge](https://img.shields.io/badge/-Jonathan-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/jonathan-rios-sousa-19b3431b6/)](https://www.linkedin.com/in/jonathan-rios-sousa-19b3431b6/) 
+[![Gmail Badge](https://img.shields.io/badge/-jonathan.riosousa@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:jonathan.riosousa@gmail.com)](mailto:jonathan.riosousa@gmail.com)
