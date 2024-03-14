@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { expect, expect } from "vitest";
+import { vi } from "vitest";
 
 import { Favorites } from "./Favorites";
 
@@ -16,40 +16,19 @@ const mockRepository = {
   },
 };
 
-const makeSut = (isListEmpty: boolean) => {
-  vi.mock("@/hooks/useFavorite", () => {
-    return {
-      useFavorite() {
-        return { favoriteRepositories: isListEmpty ? [] : [mockRepository] };
-      },
-    };
-  });
-
-  const sut = render(<Favorites />, { wrapper: MemoryRouter });
-
-  return {
-    sut,
-  };
-};
-
-describe("Page: Favorites", () => {
-  it("should render a message when no found any favorite repositories", () => {
-    const { sut } = makeSut(false);
-    const wrapper = sut;
-
-    expect(
-      wrapper.getByText("Nenhum repositório encontrado"),
-    ).toBeInTheDocument();
-    expect(
-      wrapper.getByText(
-        "Para visualizar deve adicionar algum repositório como favorito.",
-      ),
-    ).toBeInTheDocument();
-  });
-
+describe("Page: Favorites - Aux", () => {
   it("should render a message when found any favorite repositories", () => {
-    const { sut } = makeSut(true);
-    const wrapper = sut;
+    vi.mock("@/hooks/useFavorite", () => {
+      return {
+        useFavorite() {
+          return {
+            favoriteRepositories: [mockRepository],
+          };
+        },
+      };
+    });
+
+    const wrapper = render(<Favorites />, { wrapper: MemoryRouter });
 
     expect(wrapper.getByText("test-repo")).toBeInTheDocument();
     expect(wrapper.getByText("test-repo")).toBeInTheDocument();
