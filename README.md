@@ -52,8 +52,13 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 ## 🔗 Link do projeto
 Se quiser ver o projeto no ar, clique [aqui](https://casarcom-frontend-technical-test.vercel.app/).
 
+
 ## 🚀 Como executar
-Clone o projeto e acesse a pasta do mesmo.
+Para executar a aplicação, será necessário criar um **TOKEN** de autenticação da **API** do **Github**. Siga os passos abaixo para gerar o token:
+
+1. Acesse o [guia de autenticação do GitHub](https://docs.github.com/pt/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28) para obter mais detalhes sobre como gerar o token.
+
+2. Clone o projeto e acesse a pasta do mesmo.
 
 ```bash
 $ git clone https://github.com/Jonathan-Rios/casarcom-frontend-technical-test.git
@@ -61,7 +66,11 @@ $ git clone https://github.com/Jonathan-Rios/casarcom-frontend-technical-test.gi
 $ cd casarcom-frontend-technical-test
 ```
 
-Para iniciá-lo, siga os passos abaixo:
+3. Crie um arquivo .env, seguindo como modelo o arquivo .env.example na raiz do projeto.
+
+4. Adicione a Token (Gerada na etapa 1) na variável de ambiente **VITE_GITHUB_TOKEN=**.
+
+5. Rode o projeto com os comandos abaixo:
 ```bash
 # Instalar as dependências
 $ npm install
